@@ -12,7 +12,7 @@ int cantidadDeNumerosSinPintarMejorado(int i, int arreglo[], int n, int ultimoAz
         int minSiRojo = n, minSiAzul = n, minSinPintar;
         if (!hayRojo || arreglo[i] > ultimoRojo){ // Pintamos de rojo solo si el numero es mas grande que el ultimo rojo pintado
             minSiRojo = cantidadDeNumerosSinPintarMejorado(i + 1, arreglo, n, ultimoAzul, arreglo[i], hayAzul, true); // Aca obtenemos la cantidad minima de numero sin pintar si pintamos este num de rojo
-            if (minSiRojo == 0) {
+            if (minSiRojo == 0) { // Si es el optimo ya devuelvo esto
                 return minSiRojo;
             }
         }
@@ -20,7 +20,7 @@ int cantidadDeNumerosSinPintarMejorado(int i, int arreglo[], int n, int ultimoAz
 
         if (!hayAzul || arreglo[i] < ultimoAzul){ // Igual que para el rojo ahora lo hacemos para el azul
             minSiAzul = cantidadDeNumerosSinPintarMejorado(i + 1, arreglo, n, arreglo[i], ultimoRojo, true, hayRojo);
-            if (minSiAzul == 0) {
+            if (minSiAzul == 0) { // Si es el optimo ya devuelvo esto
                 return minSiAzul;
             }
         }

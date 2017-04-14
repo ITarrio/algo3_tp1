@@ -4,7 +4,7 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
-  "/home/ignacio/facultad/algo3/1tp/proyect/main.cpp" "/home/ignacio/facultad/algo3/1tp/proyect/cmake-build-debug/CMakeFiles/proyect.dir/main.cpp.o"
+  "/home/ignacio/facultad/algo3/1tp/proyect/ej3.cpp" "/home/ignacio/facultad/algo3/1tp/proyect/cmake-build-debug/CMakeFiles/proyect.dir/ej3.cpp.o"
   )
 set(CMAKE_CXX_COMPILER_ID "GNU")
 

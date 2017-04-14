@@ -1,1 +1,1 @@
-/usr/bin/c++   -g   CMakeFiles/proyect.dir/main.cpp.o  -o proyect 
+/usr/bin/c++   -g   CMakeFiles/proyect.dir/ej3.cpp.o  -o proyect 

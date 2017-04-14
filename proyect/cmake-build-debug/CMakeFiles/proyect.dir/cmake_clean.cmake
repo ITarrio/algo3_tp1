@@ -1,5 +1,5 @@
 file(REMOVE_RECURSE
-  "CMakeFiles/proyect.dir/main.cpp.o"
+  "CMakeFiles/proyect.dir/ej3.cpp.o"
   "proyect.pdb"
   "proyect"
 )

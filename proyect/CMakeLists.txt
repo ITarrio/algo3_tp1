@@ -3,5 +3,8 @@ project(proyect)
 
 set(CMAKE_CXX_STANDARD 11)
 
-set(SOURCE_FILES main.cpp)
-add_executable(proyect ${SOURCE_FILES})
+add_executable(ej1 ej1.cpp)
+
+add_executable(ej2 ej2.cpp)
+
+add_executable(ej3 ej3.cpp)

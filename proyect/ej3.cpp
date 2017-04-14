@@ -33,16 +33,17 @@ int SinPintarM::getOptimoPara(int ultimoRojo, int ultimoAzul) {
 }
 
 int buscarOptimoRojo(int indiceRojoSiguiente, int indiceAzulFijo, int arreglo[], SinPintarM &m, int n ) {
-    int optimo = m.getOptimoPara(n, indiceAzulFijo); // Si no encontramos un numero menor anterior, siempre podemos partir si no pintamos todavia nada de rojo
-    for(int r = 0; r < indiceRojoSiguiente; r++){
+    int optimo = m.getOptimoPara(n, indiceAzulFijo); // Ponemos como el optimo como si no hubiesemos pintado ningun rojo antes
+    for(int r = 0; r < indiceRojoSiguiente; r++){ // Dejamos el indice del azul fijo y movemos el rojo, para buscar cual es el que menos numeros sin pintar tiene
         if (r != indiceAzulFijo && arreglo[r] < arreglo[indiceRojoSiguiente] && m.getOptimoPara(r, indiceAzulFijo) < optimo) {
             optimo = m.getOptimoPara(r, indiceAzulFijo);
         }
     }
+    // Una vez encontrado el optimo devolvemos este menos uno ya que este nuevo numero lo pintamos
     return optimo - 1;
 }
 
-int buscarOptimoAzul(int indiceAzulSiguiente, int indiceRojoFijo, int arreglo[], SinPintarM &m, int n ) {
+int buscarOptimoAzul(int indiceAzulSiguiente, int indiceRojoFijo, int arreglo[], SinPintarM &m, int n ) { // Lo mismo que con el rojo pero con el azul
     int optimo = m.getOptimoPara(indiceRojoFijo, n);
     for(int a = 0; a < indiceAzulSiguiente; a++){
         if (a != indiceRojoFijo && arreglo[a] > arreglo[indiceAzulSiguiente] && m.getOptimoPara(indiceRojoFijo, a) < optimo) {
@@ -59,6 +60,7 @@ int ej3(int a[], int n){
     m.setOptimoPara(n - 1, n, 0);
     m.setOptimoPara(n, n, n); // Y si no pintamos ninguno van a quedar los n sin pintar
 
+    //Vamos a ir buscando el optimo para cada caso en orden, empezando por el primer indice pintando de cada maneras
     for (int i = 1; i < n; i++) {
         for(int j = 0; j < i; j++) {
             m.setOptimoPara(buscarOptimoRojo(i, j, a, m, n), i, j);
@@ -68,7 +70,7 @@ int ej3(int a[], int n){
         m.setOptimoPara(buscarOptimoAzul(i, n, a, m, n), n, i);
     }
 
-    //buscamos el optimo
+    //Una vez ya calculado todos buscamos el mejor
     int optimo = n;
     for (int i = 0; i <= n; i++) {
         for (int j = 0; j <= n; j++) {

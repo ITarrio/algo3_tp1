@@ -43,7 +43,7 @@ int ej2(int arreglo[], int n){
     return cantidadDeNumerosSinPintarMejorado(0, arreglo, n, NULL, NULL, false, false);
 }
 
-int main() {
+int main2() {
     int largo;
     std::cin >> largo;
     int arreglo[largo];

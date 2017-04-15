@@ -38,7 +38,7 @@ int ej1(int arreglo[], int n){
     return cantidadDeNumerosSinPintar(0, arreglo, n, NULL, NULL, false, false);
 }
 
-int main() {
+int main1() {
     int largo;
     std::cin >> largo;
     int arreglo[largo];

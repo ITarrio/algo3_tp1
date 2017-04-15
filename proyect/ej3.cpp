@@ -19,9 +19,9 @@ SinPintarM::SinPintarM(int largo) {
 
 SinPintarM::~SinPintarM() {
     for(int i = 0; i < largo; i++) {
-        delete (m[i]);
+        delete[] m[i];
     }
-    delete(m);
+    delete [] m;
 }
 
 void SinPintarM::setOptimoPara(int cantSinPintar, int ultimoRojo, int ultimoAzul) {
@@ -83,7 +83,7 @@ int ej3(int a[], int n){
     return optimo;
 }
 
-int main3() {
+int main() {
     int largo;
     std::cin >> largo;
     int arreglo[largo];

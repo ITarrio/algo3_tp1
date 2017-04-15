@@ -28,3 +28,5 @@
 *.app
 
 proyect/cmake-build-debug/
+.idea/
+proyect/.idea/

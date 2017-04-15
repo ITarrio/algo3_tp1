@@ -1,6 +1,0 @@
-/home/ignacio/facultad/algo3/1tp/proyect/cmake-build-debug/CMakeFiles/edit_cache.dir
-/home/ignacio/facultad/algo3/1tp/proyect/cmake-build-debug/CMakeFiles/exp.dir
-/home/ignacio/facultad/algo3/1tp/proyect/cmake-build-debug/CMakeFiles/ej3.dir
-/home/ignacio/facultad/algo3/1tp/proyect/cmake-build-debug/CMakeFiles/ej2.dir
-/home/ignacio/facultad/algo3/1tp/proyect/cmake-build-debug/CMakeFiles/rebuild_cache.dir
-/home/ignacio/facultad/algo3/1tp/proyect/cmake-build-debug/CMakeFiles/ej1.dir

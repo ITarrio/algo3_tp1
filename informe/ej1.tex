@@ -1,0 +1,71 @@
+\section{Ejercicio 1 (BackTracking):}
+
+En este ejercicio se nos pide resolver el problema utilizando un algoritmo de backtracking.
+
+Backtraking es una técnica para buscar exhaustivamente todas las configuraciones del espacio de soluciones de un problema, para eso va generando las posibles soluciones y dejando atras los cantidatos cuando sabemos que no son validos(que no pertenecen al espacio de soluciones validas del problema).
+
+Para este problema queremos buscar el minimo de numeros sin pintar para una secuencia de numeros de largo $n$. Ya que un numero puede estar pintado de rojo, azul o sin pintar, y como tenemos $n$ numeros, podemos tener como maximo $3^n$ posibles combinaciones, aunque podrian ser menos ya que de esas combinaciones hay posibilidades que no son validas como soluciones ya que puede ser que la subsecuencia de rojos no sea creciente o decreciente para la de azul. Una vez generadas todas estas soluciones, deberiamos encontrar la que menos numeros tiene sin pintar y esa va a ser la solucion a nuestro problema(se nos pide la cantidad no que combinacion de rojos y azules).
+
+Ya que estamos construyendo las distintas soluciones, empezamos decidiendo de que color pintar el numero primer numero, rojo azul o sin pintar, para cada una de estas 3 decisiones vamos a pasar al siguiente numero y repetir el proceso, asi hasta llegar al final en el que vamos a tener como pintamos los numero y nos fijamos cuantos dejamos sin pintar. Una vez que tenemos todas las soluciones buscamos la optima.
+
+Se implemento este algoritmo de manera recursiva, dado el arreglo de numeros, el indice, y cual fue el ultimo rojo y ultimo azul pintado(si hay), devuelve la minima cantidad de numero sin pintar dentro de las posibilidades. Pedimos el ultimo rojo y el ultimo azul porque no me importa saber como los pinte si no los ultimos ya que eso me va a dar la limitante de si el proximo numero lo puedo pintar de rojo o azul(y descartamos los que no pude pintar). Entonces esta funcion recursiva guarda los resultados del indice siguiente para las 3 posibilidades(rojo, azul y sin pintar), se fija cual es la menor y devuelve esa(si es la que no se pinta tiene que sumarle uno), excepto que sea el caso baso en el que no hay indice siguiente y devolvemos 0 si podemos pintarlo(0 elementos sin pintar en un arreglo que contiene solo al ultimo elemento pintado de cualquier color) o 1 si no lo pudimos pintar, y despues se van a ir llenando las anteriores llamadas con estos casos bases.
+
+Un poco de codigo:
+
+\begin{algorithm}[H]
+	\KwData{	
+	arreglo = el arreglo de numeros entero\\
+	n = el tamaño del arreglo
+	\KwResult{La cantidad minima de numeros sin pintar para una secuencia de numeros de largo n}
+	\caption{\algoritmo{ej}{int arreglo[], n}{int}}
+		\tcc{Empezamos el backtracking desde el primer indice(0) y no inicializamos todavia el ultimo rojo y el ultimo azul}
+		res $\leftarrow$ BT(0, arreglo, n, NULL, NULL)\\
+	}
+\end{algorithm}
+
+\begin{algorithm}[H]
+	\KwData{
+	i = indice actual a pintar\\
+	arreglo = el arreglo de numeros entero\\
+	n = el tamaño del arreglo\\
+	ultimoRojo = el ultimo numero que se pinto de rojo(NULL si no se pinto ninguno)}
+	\KwResult{La cantidad minima de numeros sin pintar a partir de i hasta n}
+	\caption{\algoritmo{BT}{int i, arreglo[], n, ultimoRojo, ultimoAzul}{int}}
+
+	numeroActual $\leftarrow$ arreglo[i]\\
+	\eIf{ i = $n-1$ }{
+		\tcc{Si el indice es el ultimo numero entonces estamos en el caso base}
+		\tcc{Tenemos que fijarnos si podemos pintarlo}
+		\eIf { ultimoRojo = NULL \textbf{or} ultimoAzul = NULL \textbf{or} ultimoRojo $<$ numeroActual \textbf{or} ultimoAzul $>$ numeroActual }{
+			res  $\leftarrow$ 0
+		}{
+			\tcc{No lo podemos pintar porque no seria una solucion valida entonces devolvemos 1}
+			res  $\leftarrow$ 1
+		}
+	}{	
+		int minSiRojo, minSiAzul, minSinPintar\\
+		\If{ ultimoRojo = NULL \textbf{or} ultimoRojo $<$ numeroActual} {
+			\tcc{Si lo podemos pintar el numero actual de rojo osea si es mas grande que el anterior rojo pintado, o si es el primero rojo en pintarse, y cambiamos el ultimoRojo por este numero}
+			minSiRojo $\leftarrow$ BT(i+1, arreglo, n, numeroActual, ultimoAzul)
+		}
+		\If{ ultimoAzul = NULL \textbf{or} numeroActual $<$ ultimoAzul} {
+			\tcc{Lo mismo con el azul}
+			minSiAzul $\leftarrow$ BT(i+1, arreglo, n, ultimoRojo, numeroActual)
+		}
+		\tcc{Calculamos tambien si no lo pintamos y al resultado le sumamos uno porque este no lo pintamos}
+		minSinPintar $\leftarrow$ BT(i+1, arreglo, n, ultimoRojo, ultimoAzul) + 1\\
+		\tcc{retornamos el minimo de ambos(considerando que la func min es O(1) y si es nulo la variable no lo considera)}
+		res $\leftarrow$ min(minSiRojo, minSiAzul, minSinPintar)
+	}
+
+\end{algorithm}
+
+
+Analisis de complejidad:
+Ya dijimos que la cantidad de combinaciones posibles eran $3^n$, y podemos decir que este algoritmo recorre como maximo todas estas instancias porque empieza desde el indice 0 y por cada numero del arreglo prueba las 3 combinaciones(o al menos las validas), entrando recursivamente al indice siguiente(i+1) y esos lo van a repetir hasta llegar al caso base que seria llegar al ultimo indice. Ahora, cada llamada recursiva hace una cantidad de operaciones O(1) constantes (sumar, comparar, minimo) y si no es el caso base ademas hace 3 llamadas recursivas, pero reduciendo el n. Esto nos hace quedar que la complejidad de la funcion recursiva es $T(n) = 3T(n-1) + O(1)$ con $T(0) = 1$ como el caso base, que se puede demostrar facilmente (por induccion) que es $O(3^n)$. Otra forma de llegar es ver el arbol de ejecucion de la recursion, cada nodo desprende tres nodos hijos, vamos a tener un arbol de altura n, y como es un arbol ternario tenemos $3^n$ hojas, que son nuestras soluciones. Esta complejidad se considera exponencial y es muy mala para instancias grandes.
+
+TODO Y PONER CASOS PEORES Y MEJORES GRAFICOS y DEMOSTRAR CORRECTITUD
+
+
+
+

@@ -1,0 +1,42 @@
+\documentclass[10pt, a4paper, spanish]{article}
+\usepackage[paper=a4paper, left=1.5cm, right=1.5cm, bottom=1.5cm, top=3.5cm]{geometry}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish]{babel}
+\usepackage[autor]{caratula}
+\usepackage[pdfencoding=auto, colorlinks=true, linkcolor=blue]{hyperref}
+\usepackage[boxruled, longend]{algorithm2e}
+
+\SetKwComment{Comment}{}{}
+\SetKwInput{Pre}{Pre}
+\SetKwInput{Post}{Post}
+
+\newcommand\complejidad{\textbf{Complejidad}}
+\newcommand\justifcomp{\textbf{Justificación}}
+\newcommand\OdeLinea[1]{\Comment*[r]{$O(#1)$}}
+\newcommand\OdeBloque[1]{\Comment*[f]{$O(#1)$}}
+
+\newcommand{\TituloDis}[1]{
+  \vspace*{1ex}\par\noindent\textbf{\large #1}\par
+}
+
+\newcommand{\algoritmo}[3]{\hangindent=\parindent#1 (#2) \ifx#3\empty\else$\rightarrow$ res: #3\fi}
+
+\begin{document}
+
+% CARATULA
+\materia{Algoritmos y Estructuras de Datos III}
+\submateria{Primer Cuatrimestre de 2017}
+\fecha{\today}
+\titulo{Trabajo Práctico 1}
+
+\integrante{Tarrío, Ignacio}{363/15}{itarrio@dc.uba.ar}
+
+\maketitle
+
+\tableofcontents
+\pagebreak
+
+\input{ej1}
+\input{ej2}
+
+\end{document}

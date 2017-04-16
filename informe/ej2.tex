@@ -1,0 +1,64 @@
+\section{Ejercicio 2 (BackTracking con Poda):}
+
+En este ejercicio nos piden hacer una mejora en el anterior algoritmo de backtracking y hacerle una poda. Las podas consisten en que hay instancias de soluciones parciales que ya no nos interesan y ni siquiera las calculamos, porque por ejemplo esta solucion va a hacer peor que una que ya calculamos anteriormente. Esto lo que provoca es una optimizacion porque dejamos de calcular cosas, aunque sigue siendo una busqueda exhaustiva.
+
+Si recordamos el anterior algoritmo, para un indice calculaba el menor si lo pintabamos de rojo, despues de azul y despues sin pintar, pero que pasa si uno nos devuelve que se pueden pintar todos los proximos numeros, osea que los los otros no hace falta computarlos ya que solo nos importa la cantidad de numeros sin pintar, y no vamos a encontrar una mejor porque esta es la minima. Esta es nuestra primer poda, una vez calculado una solucion parcial para un color, nos fijamos si es optima y si lo es nos salteamos(no computamos) las otras alternativas de colores.	Tambien podriamos llevar una cuenta de cual es la solucion(entera) optima y no calculamos una que pueda ser peor que esa, por ejemplo si voy por el 3 indice y encontramos una solucion que solo no puede pintar un numero, solo tenemos que buscar una solucion que pinta todos los numeros, asi que no vamos a entrar a las recursiones de no pintar.
+
+Para la implementacion de estas podas modificamos un poco la base del codigo del anterior ejercicio asi se nos es mas facil calcular los datos. Ahora la funcion recursiva tiene 2 parametros de entrada nuevos, el minimo encontrado en las soluciones ya calculadas y la cantidad de numeros que ya no pintamos y ahora en vez de devolver un resultado parcial, devuelve la cantidad de sin pintar para todo el arreglo(ya que tenemos la cantidad que no pintamos antes).
+
+Pseudocodigo:
+
+
+\begin{algorithm}[H]
+	\KwData{
+	i = indice actual a pintar\\
+	arreglo = el arreglo de numeros entero\\
+	n = el tamaño del arreglo\\
+	ultimoRojo = el ultimo numero que se pinto de rojo(NULL si no se pinto ninguno)}
+	ultimoAzul = el ultimo azul pintado\\
+	optimoActual = la mejor solucion encontrada hasta el momento
+	sinPintar = cantidad de numeros sin pintar antes de i\\
+	\KwResult{La cantidad minima de numeros sin pintar a partir de i hasta n}
+	\caption{\algoritmo{BTI}{int i, arreglo[], n, ultimoRojo, ultimoAzul, optimoActual, sinPintar}{int}}
+
+	numeroActual $\leftarrow$ arreglo[i]\\
+	\eIf{ i = $n-1$ }{
+		\tcc{Si el indice es el ultimo numero entonces estamos en el caso base}
+		\tcc{Tenemos que fijarnos si podemos pintarlo}
+		\eIf { ultimoRojo = NULL \textbf{or} ultimoAzul = NULL \textbf{or} ultimoRojo $<$ numeroActual \textbf{or} ultimoAzul $>$ numeroActual }{
+			res  $\leftarrow$ sinPintar
+		}{
+			\tcc{No lo podemos pintar porque no seria una solucion valida entonces devolvemos la cantidad que pintamos antes mas 1 porque este no lo pintamos}
+			res  $\leftarrow$ sinPintar + 1
+		}
+	}{	
+		int minSiRojo, minSiAzul, minSinPintar\\
+		\If{ ultimoRojo = NULL \textbf{or} ultimoRojo $<$ numeroActual} {
+			minSiRojo $\leftarrow$ BTI(i+1, arreglo, n, numeroActual, ultimoAzul, optimoActual, sinPintar)\\
+			\tcc{PODA 1: si es el optimo no calculamos los demas y devolvemos este}
+			\If{minSiRojo $=$ sinPintar}{
+				res $\leftarrow$ minSiRojo
+			}
+			\If{ minSiRojo $<$ sinPintar} {
+				optimoActual $\leftarrow$ minSiRojo
+			}
+		}
+		\If{ ultimoAzul = NULL \textbf{or} numeroActual $<$ ultimoAzul} {
+			\tcc{Lo mismo con el azul}
+			minSiAzul $\leftarrow$ BTI(i+1, arreglo, n, ultimoRojo, numeroActual, optimoActual, sinPintar)\\
+			\tcc{PODA 1}
+			\If{minSiAzul $=$ sinPintar}{
+				res $\leftarrow$ minSiAzul
+			}
+			\If{ minSiAzul $<$ sinPintar} {
+				optimoActual $\leftarrow$ minSiAzul
+			}
+		}
+		\tcc{PODA 2: solo calculamos sin pintar este numero, si todavia podemos mejorar el optimo}
+		\If{sinPintar $<$ optimoActual $- 1$} {
+			minSinPintar $\leftarrow$ BTI(i+1, arreglo, n, ultimoRojo, ultimoAzul, optimoActual, sinPintar + 1)\\
+		}
+		res $\leftarrow$ min(minSiRojo, minSiAzul, minSinPintar)
+	}
+
+\end{algorithm}

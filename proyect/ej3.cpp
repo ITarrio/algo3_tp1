@@ -83,7 +83,7 @@ int ej3(int a[], int n){
     return optimo;
 }
 
-int main() {
+int main3() {
     int largo;
     std::cin >> largo;
     int arreglo[largo];

@@ -57,20 +57,17 @@ void probar(){
                 file >> arreglo[i];
             }
             auto start = ya();
-            u = ej1(arreglo, largo);
+            ej1(arreglo, largo);
             auto end = ya();
             cout << chrono::duration_cast<std::chrono::nanoseconds>(end-start).count() << "|";
             start = ya();
-            d = ej2(arreglo, largo);
+            ej2(arreglo, largo);
             end = ya();
             cout << chrono::duration_cast<std::chrono::nanoseconds>(end-start).count() << ",";
             start = ya();
-            t = ej3(arreglo, largo);
+            ej3(arreglo, largo);
             end = ya();
             cout << chrono::duration_cast<std::chrono::nanoseconds>(end-start).count() << ";";
-            if (!(u == d && d ==t)){
-                cout << endl << endl << endl << "WRONG" << endl;
-            }
         }
         cout << endl;
         file.close();

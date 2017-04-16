@@ -2,16 +2,15 @@
 
 En este ejercicio se nos pide resolver el problema utilizando un algoritmo de backtracking.
 
-Backtraking es una técnica para buscar exhaustivamente todas las configuraciones del espacio de soluciones de un problema, para eso va generando las posibles soluciones y dejando atras los cantidatos cuando sabemos que no son validos(que no pertenecen al espacio de soluciones validas del problema).
+Backtracking es una técnica para buscar exhaustivamente todas las configuraciones del espacio de soluciones de un problema, para eso va generando las posibles soluciones constructivamente y va dejando atrás los candidatos cuando sabemos que no son válidos(que no pertenecen al espacio de soluciones válidas del problema).
 
-Para este problema queremos buscar el minimo de numeros sin pintar para una secuencia de numeros de largo $n$. Ya que un numero puede estar pintado de rojo, azul o sin pintar, y como tenemos $n$ numeros, podemos tener como maximo $3^n$ posibles combinaciones, aunque podrian ser menos ya que de esas combinaciones hay posibilidades que no son validas como soluciones ya que puede ser que la subsecuencia de rojos no sea creciente o decreciente para la de azul. Una vez generadas todas estas soluciones, deberiamos encontrar la que menos numeros tiene sin pintar y esa va a ser la solucion a nuestro problema(se nos pide la cantidad no que combinacion de rojos y azules).
+Para este problema queremos buscar el minimo de numeros sin pintar para una secuencia de números de largo $n$. Ya que un número puede estar pintado de rojo, azul o sin pintar, y como tenemos $n$ números, podemos tener como máximo $3^n$ posibles combinaciones, aunque podrían ser menos ya que de esas combinaciones hay posibilidades que no son válidas como soluciones ya que puede ser que la subsecuencia de rojos no sea creciente o decreciente para la de azul. Una vez generadas todas estas soluciones, deberíamos encontrar la que menos numeros tiene sin pintar y esa va a ser la solución a nuestro problema(se nos pide la cantidad no qué combinación de rojos y azules).
 
-Ya que estamos construyendo las distintas soluciones, empezamos decidiendo de que color pintar el numero primer numero, rojo azul o sin pintar, para cada una de estas 3 decisiones vamos a pasar al siguiente numero y repetir el proceso, asi hasta llegar al final en el que vamos a tener como pintamos los numero y nos fijamos cuantos dejamos sin pintar. Una vez que tenemos todas las soluciones buscamos la optima.
+Ya que estamos construyendo las distintas soluciones, empezamos decidiendo de qué color pintar el número primer número, rojo azul o sin pintar, para cada una de estas 3 decisiones vamos a pasar al siguiente número y repetir el proceso, así hasta llegar al final en el que vamos a tener como pintamos los numero y nos fijamos cuantos dejamos sin pintar. Una vez que tenemos todas las soluciones buscamos la óptima.
 
-Se implemento este algoritmo de manera recursiva, dado el arreglo de numeros, el indice, y cual fue el ultimo rojo y ultimo azul pintado(si hay), devuelve la minima cantidad de numero sin pintar dentro de las posibilidades. Pedimos el ultimo rojo y el ultimo azul porque no me importa saber como los pinte si no los ultimos ya que eso me va a dar la limitante de si el proximo numero lo puedo pintar de rojo o azul(y descartamos los que no pude pintar). Entonces esta funcion recursiva guarda los resultados del indice siguiente para las 3 posibilidades(rojo, azul y sin pintar), se fija cual es la menor y devuelve esa(si es la que no se pinta tiene que sumarle uno), excepto que sea el caso baso en el que no hay indice siguiente y devolvemos 0 si podemos pintarlo(0 elementos sin pintar en un arreglo que contiene solo al ultimo elemento pintado de cualquier color) o 1 si no lo pudimos pintar, y despues se van a ir llenando las anteriores llamadas con estos casos bases.
+Se puede implementar este algoritmo de manera recursiva, dado el arreglo de números, el índice, y cuál fue el último rojo y último azul pintado(si hay), devuelve la mínima cantidad de números sin pintar dentro de las posibilidades. Pedimos el último rojo y el último azul porque no me importa saber cómo los pinte si no los últimos ya que eso me va a dar la limitante de si el próximo número lo puedo pintar de rojo o azul(y descartamos los que no pude pintar). Entonces esta función recursiva guarda los resultados del índice siguiente para las 3 posibilidades(rojo, azul y sin pintar), se fija cual es la menor y devuelve esa(si es la que no se pinta tiene que sumarle uno), excepto que sea el caso basó en el que no hay indice siguiente y devolvemos 0 si podemos pintarlo(0 elementos sin pintar en un arreglo que contiene sólo al último elemento pintado de cualquier color) o 1 si no lo pudimos pintar, y despues se van a ir llenando las anteriores llamadas con estos casos bases.
 
-Un poco de codigo:
-
+\subsection*{Pseudocodigo}
 \begin{algorithm}[H]
 \NoCaptionOfAlgo
 	\KwData{	
@@ -61,11 +60,19 @@ Un poco de codigo:
 
 \end{algorithm}
 
-
-Analisis de complejidad:
+\subsection*{Analisis de Complejidad}
 Ya dijimos que la cantidad de combinaciones posibles eran $3^n$, y podemos decir que este algoritmo recorre como maximo todas estas instancias porque empieza desde el indice 0 y por cada numero del arreglo prueba las 3 combinaciones(o al menos las validas), entrando recursivamente al indice siguiente(i+1) y esos lo van a repetir hasta llegar al caso base que seria llegar al ultimo indice. Ahora, cada llamada recursiva hace una cantidad de operaciones O(1) constantes (sumar, comparar, minimo) y si no es el caso base ademas hace 3 llamadas recursivas, pero reduciendo el n. Esto nos hace quedar que la complejidad de la funcion recursiva es $T(n) = 3T(n-1) + O(1)$ con $T(0) = 1$ como el caso base, que se puede demostrar facilmente (por induccion) que es $O(3^n)$. Otra forma de llegar es ver el arbol de ejecucion de la recursion, cada nodo desprende tres nodos hijos, vamos a tener un arbol de altura n, y como es un arbol ternario tenemos $3^n$ hojas, que son nuestras soluciones. Esta complejidad se considera exponencial y es muy mala para instancias grandes.
 
-TODO Y PONER CASOS PEORES Y MEJORES GRAFICOS y DEMOSTRAR CORRECTITUD
+\subsection*{Experimentación Computacional}
+\subsubsection*{Instancias Aleatorias}
+Se corrío una experimentacion, sobre el codigo realizado en c++, generando arreglos aleatorios de tamaño n, y los numeros tienen una distribucion uniforme donde el minimo es 0 y el maximo es 2 veces n, esto se hizo asi, para que exista una buena probabilidad de que haya numeros repetidos, ya que si por ejemplo hay un numero repetido 3 veces no existe posibilidad de que el optimo sea 0, asi agregando casos malos a la experimentacion. Se probaron arreglos de tamaño: 1, 2, 5, 10, 15, 20, 25, 30, 35 y 40. De cada uno de estos tamaños se computaron 30 arreglos diferentes, de estos 30 se tomo el promedio.
+
+\includegraphics[scale=0.5]{ej1Random1-40.png}\\
+Como podemos ver en el grafico lo que tarda en resolver el problema aumenta exponencialmente a medida que crece el tamaño del arreglo, de hecho en promedio para calcular el arreglo de tamaño 40 es TODO segundos que es mucho, y para el de 35 tardo 0,701732075 segundos casi TODO veces mas. Para seguir haciendo enfasis en que cada vez tarda mas hagamos zoom para los primeros dato\\ 
+\includegraphics[scale=0.5]{ej1Random1-5.png}\\
+En este grafico tambien podemos apreciar como va creciendo exponencialmente(en el otro grafico parecia que al principio era constante la duracion). En este caso tenemos que en promedio para los arreglos de tamaño 5 tardan 0,001741 milisegundos y para los de tamaño 10 tarda 0,035622 milisegundos casi 20 veces mas.\\
+
+Conclusion si bien es viable para instancias chicas, es muy ineficiente y tarda mucho cuando las instancias empiezan a ser mas grande
 
 
 

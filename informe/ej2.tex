@@ -8,6 +8,17 @@ Para la implementacion de estas podas modificamos un poco la base del codigo del
 
 Pseudocodigo:
 
+\begin{algorithm}[H]
+\NoCaptionOfAlgo
+	\KwData{	
+	arreglo = el arreglo de numeros entero\\
+	n = el tamaño del arreglo
+	\KwResult{La cantidad minima de numeros sin pintar para una secuencia de numeros de largo n}
+	\caption{\algoritmo{ej2}{int arreglo[], n}{int}}
+		\tcc{Empezamos el backtracking desde el primer indice(0) y no inicializamos todavia el ultimo rojo y el ultimo azul, y ademas por defecto el optimo es n(no existe peor solucion que esta) y no pintamos ninguno todavia}
+		res $\leftarrow$ BT(0, arreglo, n, NULL, NULL, n, 0)\\
+	}
+\end{algorithm}
 
 \begin{algorithm}[H]
 	\NoCaptionOfAlgo

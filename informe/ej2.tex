@@ -10,6 +10,7 @@ Pseudocodigo:
 
 
 \begin{algorithm}[H]
+	\NoCaptionOfAlgo
 	\KwData{
 	i = indice actual a pintar\\
 	arreglo = el arreglo de numeros entero\\
@@ -62,3 +63,9 @@ Pseudocodigo:
 	}
 
 \end{algorithm}
+
+Podemos apreciar que en el peor de los casos tenemos que seguir calculando los 3 caminos asi que no podemos mejorar la complejidad. Pero sin embargo vamos a recortar muchas ramas, que no necesitamos calcular, ya que por ejemplo si encontramos el optimo pintando de rojo nos ahorramos 2/3 de las difurcaciones al no calcular si pintamos de azul y si no lo pintamos y ademas si estamos al limite de numeros sin pintar comparados con el optimo no avanzamos en las ramas de no pintar.
+
+El algoritmo es correcto ya que las soluciones que descartamos sabemos que son peores a las que ya calculamos.
+
+   

@@ -88,3 +88,8 @@ Este es nuestro algoritmo, calculamos la matriz y buscamos en ella cual es el op
 		res $\leftarrow$ optimoActual - 1 
 	}
 \end{algorithm}
+
+\subsection*{Analisis de Complejidad}
+Vamos a calcular en todos los casos, toda la matriz que ambas dimensiones son de tamaños $n+1$, osea que ya recorrer todos los elementos nos cuesta $O(n^2)$ y para calcular cada una de estos elementos de la matriz recorremos $O(n)$ elementos(en la funcion auxiliar para buscar el optimo), eso ya nos da una complejidad de $O(n^3)$ y despues buscar el optimo dentro de la matriz tambien es $O(n^2)$ y despues son una cantidad constante de operaciones elementales, en definitiva nos queda una complejidad para el peor de los casos de $O(n^3)$, de hecho en el codigo dado no cortamos nunca y siempre completamos la matriz entonces para cualquier caso el codigo va a hacer $O(n^3)$. Una alternativa de analisis es considerar los casos que tenemos, podriamos decir que tenemos 3 variables en cada caso, el ultimo azul, el ultimo rojo, y el indice, entonces como cada una de estas variables esta acotada por $n$ tenemos $n^3$ casos y son los que terminamos calculando.
+
+

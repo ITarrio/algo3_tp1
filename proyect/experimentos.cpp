@@ -6,9 +6,6 @@
 #include <chrono>
 
 using namespace std;
-#include "ej1.cpp"
-#include "ej2.cpp"
-#include "ej3.cpp"
 
 #define ya chrono::high_resolution_clock::now
 
@@ -43,8 +40,7 @@ void generarArchivos() {
 }
 
 void probar(){
-    int u, d, t;
-    int largos[] = {1, 2, 5, 10, 15, 20, 25, 30, 35};
+    int largos[] = {1, 2,5, 10, 15, 20, 25, 30, 35};
     for (int l = 0; l < 9; l++) {
         ifstream file;
         int largo = largos[l];
@@ -65,9 +61,13 @@ void probar(){
             end = ya();
             cout << chrono::duration_cast<std::chrono::nanoseconds>(end-start).count() << ",";
             start = ya();
-            ej3(arreglo, largo);
+             ej3(arreglo, largo);
             end = ya();
             cout << chrono::duration_cast<std::chrono::nanoseconds>(end-start).count() << ";";
+            start = ya();
+            ej4(arreglo, largo);
+            end = ya();
+            cout << chrono::duration_cast<std::chrono::nanoseconds>(end-start).count() << "-";
         }
         cout << endl;
         file.close();

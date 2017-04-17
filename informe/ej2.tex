@@ -1,13 +1,16 @@
 \section{Ejercicio 2 (BackTracking con Poda):}
 
-En este ejercicio nos piden hacer una mejora en el anterior algoritmo de backtracking y hacerle una poda. Las podas consisten en que hay instancias de soluciones parciales que ya no nos interesan y ni siquiera las calculamos, porque por ejemplo esta solucion va a hacer peor que una que ya calculamos anteriormente. Esto lo que provoca es una optimizacion porque dejamos de calcular cosas, aunque sigue siendo una busqueda exhaustiva.
+En este ejercicio nos piden hacer una mejora en el anterior algoritmo de backtracking y hacerle una poda. Las podas consisten en que hay instancias de soluciones parciales que ya no nos interesan y ni siquiera las necesitamos calcular, porque por ejemplo esta solución va a hacer peor que una que ya calculamos anteriormente. Esto lo que provoca es una optimización porque dejamos de calcular cosas, aunque sigue siendo una búsqueda exhaustiva, si vemos las el árbol de recursión lo que pasa es que cortamos muchas ramas.
 
-Si recordamos el anterior algoritmo, para un indice calculaba el menor si lo pintabamos de rojo, despues de azul y despues sin pintar, pero que pasa si uno nos devuelve que se pueden pintar todos los proximos numeros, osea que los los otros no hace falta computarlos ya que solo nos importa la cantidad de numeros sin pintar, y no vamos a encontrar una mejor porque esta es la minima. Esta es nuestra primer poda, una vez calculado una solucion parcial para un color, nos fijamos si es optima y si lo es nos salteamos(no computamos) las otras alternativas de colores.	Tambien podriamos llevar una cuenta de cual es la solucion(entera) optima y no calculamos una que pueda ser peor que esa, por ejemplo si voy por el 3 indice y encontramos una solucion que solo no puede pintar un numero, solo tenemos que buscar una solucion que pinta todos los numeros, asi que no vamos a entrar a las recursiones de no pintar.
+Si recordamos el anterior algoritmo, para un índice calculaba el menor si lo pintamos de rojo, despues de azul y después sin pintar, pero que pasa si uno nos devuelve que se pueden pintar todos los proximos numeros, osea que los los otros no hace falta computarlos ya que solo nos importa la cantidad de números sin pintar, y no vamos a encontrar una mejor porque esta es la mínima. Esta es nuestra primer poda, una vez calculado una solución parcial para un color, nos fijamos si es óptima y si lo es nos salteamos(no computamos) las otras alternativas de colores.	
 
-Para la implementacion de estas podas modificamos un poco la base del codigo del anterior ejercicio asi se nos es mas facil calcular los datos. Ahora la funcion recursiva tiene 2 parametros de entrada nuevos, el minimo encontrado en las soluciones ya calculadas y la cantidad de numeros que ya no pintamos y ahora en vez de devolver un resultado parcial, devuelve la cantidad de sin pintar para todo el arreglo(ya que tenemos la cantidad que no pintamos antes).
+Tambien podriamos llevar una cuenta de cuál es la solución(entera) óptima y no calculamos una que pueda ser peor que esa, por ejemplo si voy por el 3 índice y encontramos una solución que solo no puede pintar un numero, solo tenemos que buscar una solución que pinta todos los numeros, asi que no vamos a entrar a las recursiones de no pintar.
 
-Pseudocodigo:
+Para la implementación de estas podas modificamos un poco la base del código del anterior ejercicio así se nos es más fácil calcular los datos. Ahora la función recursiva tiene 2 parámetros de entrada nuevos, el mínimo encontrado en las soluciones ya calculadas(lo pasamos por referencia y editamos ese) y la cantidad de números que ya no pintamos y ahora en vez de devolver un resultado parcial, devuelve la cantidad de  números sin pintar para todo el arreglo(ya que tenemos la cantidad que no pintamos antes).
 
+Podemos afirmar que el algoritmo sigue siendo correcto porque las únicas subsoluciones que descartamos son las que ya sabemos que no van a ser las óptimas, esta es la gracia de la poda en el backtracking.
+
+\subsection*{Pseudocodigo}
 \begin{algorithm}[H]
 \NoCaptionOfAlgo
 	\KwData{	
@@ -19,7 +22,7 @@ Pseudocodigo:
 		res $\leftarrow$ BT(0, arreglo, n, NULL, NULL, n, 0)\\
 	}
 \end{algorithm}
-
+.\\
 \begin{algorithm}[H]
 	\NoCaptionOfAlgo
 	\KwData{
@@ -75,9 +78,14 @@ Pseudocodigo:
 
 \end{algorithm}
 
-Podemos apreciar que en el peor de los casos tenemos que seguir calculando los 3 caminos asi que no podemos mejorar la complejidad. Pero sin embargo vamos a recortar muchas ramas, que no necesitamos calcular, ya que por ejemplo si encontramos el optimo pintando de rojo nos ahorramos 2/3 de las difurcaciones al no calcular si pintamos de azul y si no lo pintamos y ademas si estamos al limite de numeros sin pintar comparados con el optimo no avanzamos en las ramas de no pintar.
+\subsection*{Análisis de Complejidad}
+La cantidad de recursiones a la que se sigue podiendo entrar sigue siendo de 3, osea que sigue siendo $O(3^n)$, si bien va a disminuir demasiado las recursiones que hacemos(ya que con estas podas cortamos muchos caminos), esto va a mejorar muchos el promedio de los casos, en los que casi siempre vamos a cortar muchas ramas. El mejor caso ahora es lineal, si nos dan una secuencia creciente, la primer solución que se encuentra es la que pintamos todos de rojo y como es 0 ya devolvemos eso, esto es $O(n)$ 
 
-El algoritmo es correcto ya que las soluciones que descartamos sabemos que son peores a las que ya calculamos.
+\subsection*{Experimentación Computacional}
+\subsubsection*{Instancias Aleatorias}
+Se corrieron la experimentacion sobre la misma computadora y para los mismos arreglos que para el anterior ejercicio
+\includegraphics[scale=0.5]{ej2Random1-40.png}\includegraphics[scale=0.5]{ej12Random1-40.png}\\
+A simple vista podemos ver que sigue creciendo exponencialmente, pero al compararlo con el algoritmo de sin poda notamos una gran mejora. Para instancias de 35 el original tarda 0,701732075 segundos pero el nuevo tarda 0,041461628 segundos 16 veces menos. Estos tiempos ya son mas viables que el anterior ejercicio.
 
    
 
